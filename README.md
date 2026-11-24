@@ -1,6 +1,6 @@
-# Confeitaria Encomendas
+# Bolos Caseiros
 
-Cardápio digital e gestão de encomendas para confeitaria.
+Cardápio digital e gestão de encomendas de bolos caseiros.
 
 ## Estrutura
 
