@@ -1,0 +1,12 @@
+[33m963eda0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m feat: cria tabelas de catalogo (categories e products)
+ .../migrations/20261124160912_create_catalog.sql   |  0
+ .../20261124184008_create_catalog_v2.sql           |  0
+ .../20261124184340_create_catalog_v3.sql           | 42 [32m++++++++++++++++++++++[m
+ 3 files changed, 42 insertions(+)
+[33m74e601a[m chore: inicializa supabase e vincula ao projeto
+ supabase/.gitignore   |   8 [32m+[m
+ supabase/config.jsonc | 498 [32m++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ 2 files changed, 506 insertions(+)
+[33m7252242[m docs: renomeia projeto para Bolos Caseiros
+ README.md | 4 [32m++[m[31m--[m
+ 1 file changed, 2 insertions(+), 2 deletions(-)
