@@ -10,11 +10,13 @@ pelo SQL Editor, porque mexe no schema `cron`.
    (Database -> Extensions).
 2. No SQL Editor, rode:
 
-   select cron.schedule(
-   'expire-pending-orders',
-   '_/5 _ \* \* \*',
-   'select public.expire_pending_orders()'
-   );
+```sql
+select cron.schedule(
+  'expire-pending-orders',
+  '*/5 * * * *',
+  'select public.expire_pending_orders()'
+);
+```
 
 ## O que isso faz
 
@@ -29,13 +31,17 @@ Na pratica, a vaga volta entre 2h e 2h05 depois do envio do pedido.
 
 ## Como conferir se esta funcionando
 
-    select status, return_message, start_time
-    from cron.job_run_details
-    order by start_time desc
-    limit 5;
+```sql
+select status, return_message, start_time
+from cron.job_run_details
+order by start_time desc
+limit 5;
+```
 
 Esperado: `status = succeeded`.
 
-    select jobid, jobname, schedule, active from cron.job;
+```sql
+select jobid, jobname, schedule, active from cron.job;
+```
 
 Esperado: `expire-pending-orders`, `*/5 * * * *`, `active = true`.
