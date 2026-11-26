@@ -19,4 +19,13 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // Componentes gerados pelo shadcn (src/components/ui) exportam o componente
+    // e a receita de estilos (ex.: buttonVariants) no mesmo arquivo. A regra do
+    // fast refresh so afeta o conforto no "npm run dev", entao desligamos so aqui.
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

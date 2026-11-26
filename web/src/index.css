@@ -1,13 +1,19 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Identidade da marca */
+  /* Identidade da marca (a fonte unica das cores) */
   --color-creme: #f8f3eb;
   --color-bege: #e9dccb;
   --color-pessego: #fdf1e9;
+  --color-branco: #ffffff;
   --color-caramelo: #b77a48;
   --color-caramelo-escuro: #8f5a30;
   --color-marrom: #4b3027;
+  --color-marrom-suave: #7a5f52;
   --color-rose: #d4857f;
   --color-dourado: #c98b6b;
 
@@ -19,15 +25,98 @@
   --font-display: 'Fraunces Variable', Georgia, serif;
 }
 
-body {
-  background-color: var(--color-creme);
-  color: var(--color-marrom);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+/* Ponte: os nomes do shadcn viram classes do Tailwind (bg-primary, text-foreground...) */
+@theme inline {
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
+/* Cada nome do shadcn aponta para uma cor da Juliete */
+:root {
+  --background: var(--color-creme);
+  --foreground: var(--color-marrom);
+  --card: var(--color-branco);
+  --card-foreground: var(--color-marrom);
+  --popover: var(--color-branco);
+  --popover-foreground: var(--color-marrom);
+  --primary: var(--color-caramelo-escuro);
+  --primary-foreground: var(--color-branco);
+  --secondary: var(--color-bege);
+  --secondary-foreground: var(--color-marrom);
+  --muted: var(--color-pessego);
+  --muted-foreground: var(--color-marrom-suave);
+  --accent: var(--color-bege);
+  --accent-foreground: var(--color-marrom);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--color-bege);
+  --input: var(--color-bege);
+  --ring: var(--color-caramelo);
+  --chart-1: var(--color-caramelo);
+  --chart-2: var(--color-rose);
+  --chart-3: var(--color-dourado);
+  --chart-4: var(--color-sucesso);
+  --chart-5: var(--color-marrom);
+  --radius: 0.625rem;
+  --sidebar: var(--color-marrom);
+  --sidebar-foreground: var(--color-creme);
+  --sidebar-primary: var(--color-caramelo);
+  --sidebar-primary-foreground: var(--color-creme);
+  --sidebar-accent: color-mix(in oklab, var(--color-marrom) 80%, white);
+  --sidebar-accent-foreground: var(--color-creme);
+  --sidebar-border: color-mix(in oklab, var(--color-marrom) 80%, white);
+  --sidebar-ring: var(--color-caramelo);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
 }
