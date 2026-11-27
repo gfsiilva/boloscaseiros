@@ -1,5 +1,7 @@
 import { Link, NavLink, Outlet } from 'react-router'
 import { ShoppingBag } from 'lucide-react'
+import { quantidadeTotal } from '@/lib/carrinho'
+import { useCarrinho } from '@/lib/useCarrinho'
 
 const classeDoLink = ({ isActive }: { isActive: boolean }) =>
   isActive
@@ -7,6 +9,9 @@ const classeDoLink = ({ isActive }: { isActive: boolean }) =>
     : 'text-marrom-suave hover:text-marrom'
 
 export default function SiteLayout() {
+  const { itens } = useCarrinho()
+  const quantidade = quantidadeTotal(itens)
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-bege bg-creme">
@@ -18,12 +23,30 @@ export default function SiteLayout() {
             </span>
           </Link>
 
-          <nav className="flex items-center gap-5 text-sm">
-            <NavLink to="/cardapio" className={classeDoLink}>
+          <nav className="flex items-center gap-3 text-sm">
+            <NavLink
+              to="/cardapio"
+              className={(estado) =>
+                `flex min-h-11 items-center px-2 ${classeDoLink(estado)}`
+              }
+            >
               Cardápio
             </NavLink>
-            <NavLink to="/carrinho" className={classeDoLink} aria-label="Carrinho">
+            <NavLink
+              to="/carrinho"
+              aria-label={
+                quantidade > 0 ? `Carrinho, ${quantidade} item(ns)` : 'Carrinho'
+              }
+              className={(estado) =>
+                `relative flex size-11 items-center justify-center ${classeDoLink(estado)}`
+              }
+            >
               <ShoppingBag className="size-5" />
+              {quantidade > 0 && (
+                <span className="absolute right-0.5 top-0.5 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.65rem] leading-4 text-primary-foreground">
+                  {quantidade}
+                </span>
+              )}
             </NavLink>
           </nav>
         </div>

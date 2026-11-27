@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { Minus, Plus } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { formatarReais } from '@/lib/dinheiro'
+import { useCarrinho } from '@/lib/useCarrinho'
 
 type ProdutoDetalhe = {
   id: string
@@ -37,6 +38,8 @@ function textoDoPrazo(horas: number): string {
 
 export default function Produto() {
   const { id } = useParams()
+  const { adicionar } = useCarrinho()
+  const [adicionado, setAdicionado] = useState(false)
 
   const [produtos, setProdutos] = useState<ProdutoDetalhe[] | null>(null)
   const [sabores, setSabores] = useState<Sabor[]>([])
@@ -142,6 +145,21 @@ export default function Produto() {
     if (novoProduto) setQuantidade((q) => Math.min(q, novoProduto.max_per_order))
   }
 
+  function adicionarAoCarrinho() {
+    adicionar({
+      produtoId: produto.id,
+      saborId: sabor?.id ?? null,
+      nomeProduto: nomeDoBolo,
+      tamanho: produto.size_label,
+      nomeSabor: sabor?.name ?? null,
+      precoUnitarioCentavos: precoUnitario,
+      quantidade,
+      maxPorPedido: produto.max_per_order,
+      observacoes: observacoes.trim(),
+    })
+    setAdicionado(true)
+    window.setTimeout(() => setAdicionado(false), 4000)
+  }
   const classeCaixa = (selecionada: boolean) =>
     `min-h-11 rounded-xl border px-4 py-2 text-left text-sm transition ${
       selecionada
@@ -276,13 +294,22 @@ export default function Produto() {
 
           <button
             type="button"
-            disabled
-            className="mt-4 min-h-12 w-full rounded-full bg-primary px-6 text-primary-foreground opacity-50"
+            onClick={adicionarAoCarrinho}
+            className="mt-4 min-h-12 w-full rounded-full bg-primary px-6 text-primary-foreground transition hover:opacity-90"
           >
             Adicionar ao carrinho
           </button>
           <p className="mt-2 text-center text-xs text-muted-foreground">
-            O carrinho entra na próxima parte.
+            {adicionado ? (
+              <>
+                Adicionado!{' '}
+                <Link to="/carrinho" className="font-semibold text-primary underline">
+                  Ver carrinho
+                </Link>
+              </>
+            ) : (
+              'Você pode revisar tudo no carrinho antes de enviar.'
+            )}
           </p>
         </div>
       </div>
