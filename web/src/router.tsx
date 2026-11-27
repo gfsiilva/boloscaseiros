@@ -8,6 +8,7 @@ import Agendamento from '@/pages/Agendamento'
 import Dados from '@/pages/Dados'
 import Revisao from '@/pages/Revisao'
 import Confirmacao from '@/pages/Confirmacao'
+import TesteBanco from '@/pages/TesteBanco'
 import NaoEncontrada from '@/pages/NaoEncontrada'
 
 export const router = createBrowserRouter([
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: 'dados', element: <Dados /> },
       { path: 'revisao', element: <Revisao /> },
       { path: 'confirmacao', element: <Confirmacao /> },
+      { path: 'teste-banco', element: <TesteBanco /> },
       { path: '*', element: <NaoEncontrada /> },
     ],
   },
