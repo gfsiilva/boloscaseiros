@@ -101,3 +101,51 @@ export function salvar(itens: ItemCarrinho[]): void {
     // navegador sem armazenamento: o carrinho segue valendo so enquanto a aba estiver aberta
   }
 }
+export type Retirada = {
+  slotId: string
+  data: string
+  hora: string
+  assinatura: string
+}
+
+export type NovaRetirada = Omit<Retirada, 'assinatura'>
+
+// Identifica o conteudo do carrinho: se mudar, o horario escolhido deixa de valer
+export function assinaturaCarrinho(itens: ItemCarrinho[]): string {
+  return itens
+    .map((i) => `${i.produtoId}|${i.saborId ?? ''}|${i.quantidade}`)
+    .sort()
+    .join(';')
+}
+
+const CHAVE_RETIRADA = 'juliete:retirada:v1'
+
+export function lerRetirada(): Retirada | null {
+  try {
+    const bruto = window.localStorage.getItem(CHAVE_RETIRADA)
+    if (!bruto) return null
+    const r: unknown = JSON.parse(bruto)
+    if (typeof r !== 'object' || r === null) return null
+    const x = r as Record<string, unknown>
+    if (
+      typeof x.slotId === 'string' &&
+      typeof x.data === 'string' &&
+      typeof x.hora === 'string' &&
+      typeof x.assinatura === 'string'
+    ) {
+      return { slotId: x.slotId, data: x.data, hora: x.hora, assinatura: x.assinatura }
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
+export function salvarRetirada(retirada: Retirada | null): void {
+  try {
+    if (retirada) window.localStorage.setItem(CHAVE_RETIRADA, JSON.stringify(retirada))
+    else window.localStorage.removeItem(CHAVE_RETIRADA)
+  } catch {
+    // sem armazenamento: vale so enquanto a aba estiver aberta
+  }
+}
