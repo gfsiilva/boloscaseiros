@@ -1,13 +1,16 @@
 import { createContext } from 'react'
 import type { ItemCarrinho, NovoItem, NovaRetirada, Retirada } from '@/lib/carrinho'
+import type { Cliente } from '@/lib/cliente'
 
 export type ValorCarrinho = {
   itens: ItemCarrinho[]
   retirada: Retirada | null
+  cliente: Cliente | null
   adicionar: (item: NovoItem) => void
   alterarQuantidade: (id: string, quantidade: number) => void
   remover: (id: string) => void
   escolherRetirada: (retirada: NovaRetirada) => void
+  definirCliente: (cliente: Cliente) => void
   limpar: () => void
 }
 
